@@ -1,0 +1,20 @@
+# Python-Related folders & files
+__pycache__/
+.mypy_cache/
+.ruff_cache/
+dist/
+*.py[oc]
+build/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Logs
+logs/
+
+# Other
+/bak
+config/.env
+*.bak

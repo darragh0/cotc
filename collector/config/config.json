@@ -1,0 +1,73 @@
+{
+  "app": {
+    "weather_endpoint": "http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric",
+    "city": "London",
+    "api_key": "3704f3d9fcbeb5050dbaaee3d281a0ae",
+    "post_endpoint": "http://127.0.0.1:8080/metrics"
+  },  
+  "logging": {
+    "level": "CRITICAL",
+    "version": 1,
+    "disable_existing_loggers": false,
+    "formatters": {
+      "std": {
+        "()": "config.logging_config.StdFormatter",
+        "fmt": "<colorstart>[%(levelname).3s]<colorend> [%(asctime)s] :: %(message)s",
+        "datefmt": "%H:%M:%S"
+      },
+      "json": {
+        "()": "config.logging_config.JsonFormatter",
+        "keys": {
+          "level": "levelname",
+          "message": "message",
+          "timestamp": "timestamp",
+          "logger": "name",
+          "module": "module",
+          "function": "funcName",
+          "line": "lineno",
+          "thread_name": "threadName"
+        }
+      }
+    },
+    "filters": {
+      "dismiss_errors": {
+        "()": "config.logging_config.DismissErrorsFilter"
+      }
+    },
+    "handlers": {
+      "stdout": {
+        "level": "DEBUG",
+        "class": "logging.StreamHandler",
+        "stream": "ext://sys.stdout",
+        "formatter": "std",
+        "filters": [
+          "dismiss_errors"
+        ]
+      },
+      "stderr": {
+        "level": "WARNING",
+        "class": "logging.StreamHandler",
+        "stream": "ext://sys.stderr",
+        "formatter": "std"
+      },
+      "file": {
+        "level": "DEBUG",
+        "class": "logging.handlers.RotatingFileHandler",
+        "filename": "logs/app.log.jsonl",
+        "formatter": "json",
+        "maxBytes": 10485760,
+        "backupCount": 10
+      }
+    },
+    "loggers": {
+      "root": {
+        "level": "DEBUG",
+        "handlers": [
+          "stdout",
+          "stderr",
+          "file"
+        ]
+      }
+    }
+  }
+}
